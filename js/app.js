@@ -26,6 +26,7 @@ var photoArray = [alex, bob, boots, felica, frank, fred, jack, jill, kasey, kora
 
 var Tracker = function() {
 
+
 }
 
 Photo.prototype.highlight = function() {
