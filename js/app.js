@@ -2,7 +2,7 @@
 
 var Photo = function(fileLocation) { //constructor
   this.path = fileLocation;
-  this.votes = 1;
+  this.votes = 0;
   //this.index =
 }
 
@@ -51,27 +51,91 @@ Tracker.prototype.getRandomInt = function() {
   //generate a random number to select an image from photoArray
 
 };
-var battleCats1 = new Tracker ();
-var battleCats2 = new Tracker ();
-console.log(photoArray[battleCats1.getRandomInt()]);
-console.log(photoArray[battleCats2.getRandomInt()]);
+var battleCats = new Tracker ();
+var leftCats = photoArray[battleCats.getRandomInt()].path;
+var rightCats = photoArray[battleCats.getRandomInt()].path;
 
-while (battleCats1 === battleCats2) {
-  photoArray[battleCats1.getRandomInt()];
+while (leftCats === rightCats) {
+  rightCats = photoArray[battleCats.getRandomInt()].path;
+  leftCats = photoArray[battleCats.getRandomInt()].path;
 }
 
+console.dir (leftCats);
+console.dir (rightCats);
 
 Tracker.prototype.displayPhotos = function() {
-  //display the randomly selected photos
-  //prevent picking same photo twice
-  //if (photo1 === photo2) then re-roll
+var first=document.getElementById('left');
+var leftPhoto = document.createElement('img');
+leftPhoto.src=leftCats;
+first.appendChild(leftPhoto);
+
+var second=document.getElementById('right');
+var rightPhoto = document.createElement('img');
+rightPhoto.src=rightCats;
+second.appendChild(rightPhoto);
 };
+
+battleCats.displayPhotos()
+
+var vote1 = document.getElementById('leftCat')
+vote1.addEventListener('click', function(e){
+  var targetSrc = e.target.src.slice(43, 80);
+    photoArray.forEach(function(val) {
+      if (val.path === targetSrc) {
+        val.votes++;
+    }
+  })
+})
+
+var vote2 = document.getElementById('rightCat')
+vote2.addEventListener('click', function(e){
+  var targetSrc = e.target.src.slice(43, 80);
+    photoArray.forEach(function(val) {
+      if (val.path === targetSrc) {
+        val.votes++;
+    }
+  })
+})
+
+document.getElementById('left').addEventListener('click', function (e) {
+        e.target.style.outline = "solid blue 5px";
+});
+
+document.getElementById('right').addEventListener('click', function (e) {
+        e.target.style.outline = "solid red 5px";
+});
 
 Tracker.prototype.waitingForVote =  function() {
   action1()
   action2()
   action3()
 };
+
+var countries= document.getElementById("countries").getContext("2d");
+new Chart(countries).Pie(pieData, pieOptions);
+var pieData = [
+  {
+    value: 20,
+    color:"#878BB6"
+  },
+  {
+    value : 40,
+    color : "#4ACAB4"
+  },
+  {
+    value : 10,
+    color : "#FF8153"
+  },
+  {
+    value : 30,
+    color : "#FFEA88"
+  }
+];
+var pieOptions = {
+  segmentShowStroke : false,
+  animateScale : true
+}
+
 
 Tracker.prototype.displayWinner = function() {
  /* action4()
