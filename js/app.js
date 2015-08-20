@@ -1,10 +1,35 @@
-'use strict'
+(function () {
+   'use strict';
+   // this function is strict...
+}());
+$(document).ready(function() {
 
-var Photo = function(fileLocation) { //constructor
-  this.path = fileLocation;
+//User contructor
+var Tracker = function(){
+  this.isNewBattle = true;
+};
+var Photo = function(path) { //constructor
+  this.path = path;
+  this.img        = document.createElement('img');
+  this.img.src    = this.path;
   this.votes = 0;
-  //this.index =
-}
+   $(this.img).on('click', function(e){
+    if(tracker.isNewBattle){
+      e.target.votes++;
+      $(e.target).toggleClass('winner');
+      tracker.isNewBattle = false;
+      var targetVote = e.target.votes;
+      var otherVote = 0;
+      if(e.target.parentElement.id === 'imgL'){
+        otherVote = document.getElementById('imgR').children[0].votes;
+        chart(targetVote, otherVote);
+      } else {
+        otherVote = document.getElementById('imgL').children[0].votes;
+        chart(otherVote, targetVote);
+      }
+    }
+  });
+};
 
 
 var alex = new Photo('img/kitten_pictures/Alex.jpg');
@@ -24,33 +49,13 @@ var todd = new Photo('img/kitten_pictures/Todd.jpg');
 
 var photoArray = [alex, bob, boots, felica, frank, fred, jack, jill, kasey, kora, molly, steve, tigger, todd];
 
-var Tracker = function() {
-
-
-}
-
-Photo.prototype.highlight = function() {
-  //highlight the photo after it is clicked
-};
-
-Tracker.prototype.waitingForVote = function() {
-  //receive the click and
-  //increment the vote count
-  //event listener on each photo(put inside div)
-  //highlight()
-  //drawTheChart()?
-  //giveUserOptionToVoteAgain()
-  //display photos
-  //get random #()
-  //receive vote
-};
-
 Tracker.prototype.getRandomInt = function() {
 
   return Math.floor((Math.random() * 14) + 0);
   //generate a random number to select an image from photoArray
 
 };
+
 var battleCats = new Tracker ();
 var leftCats = photoArray[battleCats.getRandomInt()].path;
 var rightCats = photoArray[battleCats.getRandomInt()].path;
@@ -75,27 +80,7 @@ rightPhoto.src=rightCats;
 second.appendChild(rightPhoto);
 };
 
-battleCats.displayPhotos()
-
-var vote1 = document.getElementById('leftCat')
-vote1.addEventListener('click', function(e){
-  var targetSrc = e.target.src.slice(43, 80);
-    photoArray.forEach(function(val) {
-      if (val.path === targetSrc) {
-        val.votes++;
-    }
-  })
-})
-
-var vote2 = document.getElementById('rightCat')
-vote2.addEventListener('click', function(e){
-  var targetSrc = e.target.src.slice(43, 80);
-    photoArray.forEach(function(val) {
-      if (val.path === targetSrc) {
-        val.votes++;
-    }
-  })
-})
+battleCats.displayPhotos();
 
 document.getElementById('left').addEventListener('click', function (e) {
         e.target.style.outline = "solid blue 5px";
@@ -105,14 +90,6 @@ document.getElementById('right').addEventListener('click', function (e) {
         e.target.style.outline = "solid red 5px";
 });
 
-Tracker.prototype.waitingForVote =  function() {
-  action1()
-  action2()
-  action3()
-};
-
-var countries= document.getElementById("countries").getContext("2d");
-new Chart(countries).Pie(pieData, pieOptions);
 var pieData = [
   {
     value: 20,
@@ -122,27 +99,17 @@ var pieData = [
     value : 40,
     color : "#4ACAB4"
   },
-  {
-    value : 10,
-    color : "#FF8153"
-  },
-  {
-    value : 30,
-    color : "#FFEA88"
-  }
 ];
 var pieOptions = {
   segmentShowStroke : false,
   animateScale : true
-}
-
-
-Tracker.prototype.displayWinner = function() {
- /* action4()
-  action5()
-  action6()
-  highlight photo()*/
 };
-/////////////////////////////////////////
-//some 'document.getElementById' variables to access and maniputlate the document
+
+var countries= document.getElementById("countries").getContext("2d");
+new Chart(countries).Pie(pieData, pieOptions);
+Tracker.prototype.displayWinner = function() {
+
+};
+});
+
 
