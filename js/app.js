@@ -16,9 +16,9 @@ var Tracker = function() {
 
   this.rightPhoto = null;
 
-  $('#left').on('click', $.proxy(this.leftClicked, this));
-  $('#right').on('click', $.proxy(this.rightClicked, this));
-  $('#next').on('click', $.proxy(this.showNextPair, this));
+  $('#left').on('click', $.proxy(this.leftClick, this));
+  $('#right').on('click', $.proxy(this.rightClick, this));
+  $('#next').on('click', $.proxy(this.showNext, this));
 };
 
 Tracker.prototype.initializeLocalData = function() {
@@ -34,7 +34,7 @@ Tracker.prototype.initializeImgurData = function() {
     url: 'https://api.imgur.com/3/album/DDoWy',
     method: 'GET',
     headers: {
-      'Authorization': 'Client-ID 6372bb21c05054d'
+      'Authorization': 'Client-ID 76cf5f4a356bbc1'
     }
   })
   .done($.proxy(function(res) {
@@ -42,7 +42,7 @@ Tracker.prototype.initializeImgurData = function() {
       var photo = new Photo(res.data.images[i].link, 0);
       this.photos.push(photo);
     }
-    this.showNextPair();
+    this.showNext();
   }, this))
   .fail(function(err) {
     console.log(err);
@@ -50,29 +50,27 @@ Tracker.prototype.initializeImgurData = function() {
 };
 
 
-Tracker.prototype.leftClicked = function() {
+Tracker.prototype.leftClick = function() {
   $('#left').addClass('highlight');
   this.leftPhoto.votes++;
 
 }
 
-Tracker.prototype.rightClicked = function() {
+Tracker.prototype.rightClick = function() {
   $('#right').addClass('highlight');
   this.rightPhoto.votes++;
 
 }
 
-// Return: random index into photos array
 Tracker.prototype.generateRandom = function() {
   return Math.floor(Math.random() * this.photos.length);
 };
 
-// Return random photo object from the photo array
 Tracker.prototype.randomPhoto = function() {
   return this.photos[this.generateRandom()];
 };
 
-Tracker.prototype.showNextPair = function() {
+Tracker.prototype.showNext = function() {
   this.leftPhoto = this.randomPhoto();
   this.rightPhoto = this.randomPhoto();
   while (this.leftPhoto === this.rightPhoto) {
