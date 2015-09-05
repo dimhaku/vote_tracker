@@ -1,3 +1,12 @@
+
+.highlight {
+  border: blue 10px solid;
+}
+
+.container {
+  text-align: center;
+}
+
 button {
   border-color: #990000;
   border: 25px;
